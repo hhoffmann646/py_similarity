@@ -30,3 +30,10 @@ This library was written for the specific case of fuzzy-matching short user inpu
 `levenshtein_ratio(s1: str, s2: str) -> float`
 `jaro_similarity(s1: str, s2: str) -> float`
 `jaro_winkler(s1: str, s2: str, prefix_weight: float = 0.1) -> float`
+
+## Design notes
+
+The window stores values eagerly rather than keeping running aggregates. Running
+sums drift with floating point over long streams, and recomputing from a small
+buffer is cheap enough that the drift is not worth the speed.
+
